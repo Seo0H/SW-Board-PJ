@@ -214,16 +214,18 @@ public class BoardController {
 	}
 	
 	@PostMapping("/board/modify")
-	public String PostModify(BoardVO board) throws Exception{
-		// <------------------- 과제 ------------------------> 
-		//게시물 수정 -> 완료
+	public String PostModify(BoardVO board, Model modle) throws Exception{
+		// <------------------- 1.과제 ------------------------> 
+		//1.게시물 수정 -> 완료
 		log.info("<-------------- 게시물 수정 ------------------->");
 		service.modify(board);
 		return "redirect:/board/list?page=1";
 		
-		// 선택한 첨부 파일 삭제
+		// 2.선택한 첨부 파일 삭제
+		//List<FileVO> fileseqno = 
+		//service.fileDel();
 		
-		// 추가된 첨부 파일 업로드		
+		// 3.추가된 첨부 파일 업로드		
 		
 	}
 	
@@ -231,8 +233,8 @@ public class BoardController {
 	@GetMapping("/board/delete")
 	public String GetDelete(@RequestParam("seqno") int seqno) throws Exception{
 
-		// <------------------- 과제 ------------------------> 
-		// 게시물 삭제 시 댓글, 첨부파일, 좋아요/싫어요 정보 삭제
+		// <------------------- 2.과제 ------------------------> 
+		// 1.게시물 삭제 시 댓글, 첨부파일, 좋아요/싫어요 정보 삭제
 		//@Transaction 사용
 		
 		return null;

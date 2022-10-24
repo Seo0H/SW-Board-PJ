@@ -141,6 +141,11 @@
 		#{stored_filename},#{filesize},'Y')
 </insert>
 
+<!-- 선택 파일 삭제 -->
+<delete id="fileDel" parameterType="com.board.dto.FileVO">
+	delete from tbl_file where FILESEQNO = #{fileseqno}
+</delete>
+
 <!-- 다운로드를 위한 파일 정보 가져오기 -->
 <select id="fileInfo" parameterType="int" resultType="com.board.dto.FileVO">
 	select org_filename, stored_filename from tbl_file where fileseqno = #{fileseqno}

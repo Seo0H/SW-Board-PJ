@@ -383,7 +383,7 @@ a:active { color: red; }
          	<div id="fileList">	
          		<p style="text-align:left;">
          		<th:block th:each=file:${fileListView} style="text-align:left;">
-       				&nbsp&nbsp&nbsp&nbsp<input type="checkbox" name="deleteFileList" th:value="${file.fileseqno}"> 
+       				&nbsp&nbsp&nbsp&nbsp<input type="checkbox" th:name="deleteFileList" th:value="${file.fileseqno}"> 
       				 [[${file.org_filename}]]&nbsp( [[${file.filesize}]] Byte)<br>
          		</th:block>
          		</p>

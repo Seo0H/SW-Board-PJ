@@ -40,6 +40,9 @@ public interface BoardService {
 	//게시글 내에서 업로드된 파일 목록 보기
 	public List<FileVO> fileListView(int seqno) throws Exception;
 	
+	//선택 파일 삭제
+	public FileVO fileDel(int fileseqno) throws Exception ;
+	
 	//게시물 등록
 	public void write(BoardVO board) throws Exception;
 	

@@ -43,6 +43,9 @@ public interface BoardMapper {
 	//다운로드를 위한 파일 정보 보기
 	public FileVO fileInfo(int fileseqno) throws Exception;
 	
+	//선택 파일 삭제
+	public FileVO fileDel(int fileseqno) throws Exception ;
+	
 	//게시물 등록
 	public void write(BoardVO board) throws Exception;
 	
