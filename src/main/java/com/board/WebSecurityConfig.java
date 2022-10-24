@@ -65,14 +65,17 @@ public class WebSecurityConfig {
 	    http.csrf().disable();
 	    http.cors().disable();
 	    
+	    //로그아웃 처리
 	    http    
 	    	.logout()
-	    	.logoutRequestMatcher(new AntPathRequestMatcher("/userManage/logout")) // 로그아웃 URL
+	    	.logoutUrl("/userManage/beforelogout")
+	    	//.logoutRequestMatcher(new AntPathRequestMatcher("/userManage/logout")) // 로그아웃 URL
 	        .logoutSuccessUrl("/member/login") // 로그아웃 성공시 리다이렉트 주소
 			.invalidateHttpSession(true) // 세션 삭제
 	    	.deleteCookies("JSESSIONID","remember-me") // JSESSIONID, remember-me 쿠키 삭제
 	    	.permitAll();
 	    
+	    //세션 처리
 	    http
 	    	.sessionManagement()
 	    	.maximumSessions(1) // 세션 최대 허용 수 1, -1인 경우 무제한 세션 허용

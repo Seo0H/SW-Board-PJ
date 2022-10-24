@@ -17,6 +17,7 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -39,6 +40,10 @@ public class MemberController {
 	
 	@Autowired //비밀번호 암호화 이존성 주입
 	private PasswordEncoder pwdEncoder;
+	
+	//메인 페이지 등록
+	@GetMapping("/")
+	public String main() {return "/member/login";}
 	
 	//사용자 등록 화면 보기
 	@RequestMapping(value="/member/signup",method=RequestMethod.GET)
@@ -122,20 +127,38 @@ public class MemberController {
 		
 	}
 	
-	//로그아웃
-	@RequestMapping(value="/userManage/logout",method=RequestMethod.GET)
-	public void getLogout(HttpSession session,Model model) {
+	//로그아웃 하기 전 로그아웃 시간 등록
+	@RequestMapping(value="/userManage/beforelogout",method=RequestMethod.GET)
+	public void getLogout(HttpSession session, Model model) {	
 		
-		String userid = (String)session.getAttribute("userid");
-		String username = (String)session.getAttribute("username");
-
-		//로그 아웃 날짜 등록
+		//세션 읽어오는 부분
+		String userid= (String)session.getAttribute("userid");
+		String username=(String)session.getAttribute("username");
+		
+		//로그아웃 날짜 등록
 		service.logoutUpdate(userid);
 		
 		model.addAttribute("userid", userid);
 		model.addAttribute("username", username);
 		
-		session.invalidate(); //모든 세션 종료--> 로그아웃...
+		
+		
+	}
+	
+	//로그아웃
+	@RequestMapping(value="/userManage/logout",method=RequestMethod.POST)
+	public void postLogout(HttpSession session,Model model) {
+		
+//		String userid = (String)session.getAttribute("userid");
+//		String username = (String)session.getAttribute("username");
+//
+//		//로그 아웃 날짜 등록
+//		service.logoutUpdate(userid);
+//		
+//		model.addAttribute("userid", userid);
+//		model.addAttribute("username", username);
+//		
+//		session.invalidate(); //모든 세션 종료--> 로그아웃...
 		
 	}
 	

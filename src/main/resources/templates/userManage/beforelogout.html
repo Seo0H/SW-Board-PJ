@@ -2,6 +2,7 @@
 <html lang="ko" xmlns:th="http://www.thymeleaf.org">
 <head>
 <meta charset="utf-8">
+<title></title>
 
 <style>
 body { font-family: "나눔고딕", "맑은고딕" }
@@ -31,20 +32,19 @@ a:active { color: red; }
 
 </style>
 
-<title>환영 페이지</title>
 </head>
 <body>
 
-<div id="main" align=center>
+<br><br>
+<div id="main" align="center">
 	<div id="ViewForm">
-		<h1>[[${userid}]]([[${username}]])</h1>
-		
-		<h1>■ 회원 가입일 : <span th:text="${#temporals.format(regdate, 'yyyy-MM-dd')}"></span></h1>
-		<h1>■ 마지막 로그인 날짜 : [[${lastlogindate}]]</h1>
-		<h1>■ 마지막 로그아웃 날짜 : [[${lastlogoutdate}]]</h1>
-		
-		<h1><p style="text-align:center;">[ <a href="/board/list?page=1">게시판 가기</a> ] | [ <a href="/userManage/beforeLogout">로그아웃</a> ]</p></h1>
+	<h1>로그아웃하였습니다. [[${userid}]]([[${username}]])님 안녕히 가세요. </h1>
 	</div>
 </div>
+
+<script>
+	setTimeout(()=>{document.location.href='/userManage/login'}, 2000);
+</script>
+
 </body>
 </html>
