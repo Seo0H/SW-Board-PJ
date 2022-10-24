@@ -138,7 +138,7 @@ h1 { font-family: "HY견고딕" }
 		$("#userid").change(function(){
 			
 			$.ajax({
-				url : "/member/idCheck",
+				url : "/member/idcheck",
 				type : "post",
 				dataType : "json",
 				data : {"userid" : $("#userid").val()},

@@ -153,7 +153,8 @@
 
 <!-- 게시물 수정 -->
 <update id="modify" parameterType="com.board.dto.BoardVO">
-	update tbl_board set mtitle=#{mtitle},mcontent=#{mcontent} where seqno=#{seqno}
+	update tbl_board set mtitle=#{mtitle},
+						mcontent=#{mcontent} where seqno=#{seqno}
 </update>
 
 <!-- 게시물 삭제 -->

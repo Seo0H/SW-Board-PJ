@@ -99,6 +99,7 @@ public class BoardController {
 			model.addAttribute("myLikeCheck", likeCheckView.getMylikecheck());
 			model.addAttribute("myDislikeCheck", likeCheckView.getMydislikecheck());
 		}
+		
 		model.addAttribute("view", board);
 		model.addAttribute("pageNum", pageNum);
 		model.addAttribute("searchType", searchType);
@@ -107,6 +108,7 @@ public class BoardController {
 		model.addAttribute("next_seqno",service.next_seqno(data));
 		model.addAttribute("fileListView", service.fileListView(seqno));
 		model.addAttribute("likeCheckView", likeCheckView);
+		
 	}
 	
 	//게시물 등록 화면 보기
@@ -147,7 +149,7 @@ public class BoardController {
 			HttpSession session) throws Exception{
 		
 		log.info("파일 전송...");
-		String path = "c:\\Repository\\file\\"; 
+		String path = "D:\\Repository\\file\\"; 
 		String userid = (String)session.getAttribute("userid"); 
 		if(kind.equals("I")) 
 			seqno = service.getSeqnoWithNextval();
@@ -185,7 +187,7 @@ public class BoardController {
 	@GetMapping("/board/fileDownload")
 	public void fileDownload(@RequestParam(name="fileseqno" , required=false) int fileseqno, HttpServletResponse rs) throws Exception {
 		
-		String path = "c:\\Repository\\file\\";
+		String path = "d:\\Repository\\file\\";
 		
 		FileVO fileInfo = service.fileInfo(fileseqno);
 		String org_filename = fileInfo.getOrg_filename();
@@ -214,12 +216,15 @@ public class BoardController {
 	@PostMapping("/board/modify")
 	public String PostModify(BoardVO board) throws Exception{
 		// <------------------- 과제 ------------------------> 
+		//게시물 수정 -> 완료
+		log.info("<-------------- 게시물 수정 ------------------->");
 		service.modify(board);
+		return "redirect:/board/list?page=1";
 		
 		// 선택한 첨부 파일 삭제
+		
 		// 추가된 첨부 파일 업로드		
 		
-		return null;
 	}
 	
 	//게시물 삭제

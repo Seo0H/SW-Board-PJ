@@ -373,7 +373,7 @@ a:active { color: red; }
 	<form id="ModifyForm" method="POST" >
 		<p style="text-align:left;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;작성자 : [[${session.username}]] 님</p>
 		<input type="text" id="mtitle" name="mtitle"  th:value="${view.mtitle}">
-		<input type="hidden" name="seqno" th:value="${seqno}">
+		<input type="hidden" name="seqno" th:value="${view.seqno}">
 		<input type="hidden" name="page" th:value="${page}">
 		<input type="hidden" name="searchType" th:value="${serachType}">
 		<input type="hidden" name="keyword" th:value="${keyword}">

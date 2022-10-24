@@ -47,6 +47,7 @@ public class BoardServiceImpl implements BoardService {
 	//게시물 번호 구하기 - 시퀀스의 Last Number 사용
 	@Override
 	public int getSeqnoWithLastNumber() throws Exception {
+
 		return mapper.getSeqnoWithLastNumber();
 	}
 	
