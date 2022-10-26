@@ -384,9 +384,13 @@ a:active { color: red; }
          		<p style="text-align:left;">
          		<th:block th:each=file:${fileListView} style="text-align:left;">
        				&nbsp&nbsp&nbsp&nbsp<input type="checkbox" th:name="deleteFileList" th:value="${file.fileseqno}"> 
-      				 [[${file.org_filename}]]&nbsp( [[${file.filesize}]] Byte)<br>
+      				 [[${file.org_filename}]]&nbsp( [[${file.filesize}]] Byte)
+      				 <!-- 버튼으로 삭제하는거 나중에 구현 -->
+      				 <!-- <input type="button" value="삭제">
+      				 <input type="hidden" th:name="deleteFileList" th:value="${file.fileseqno}"> --> <br>
          		</th:block>
-         		</p>
+         		<
+         		</p> 
            	</div>       
         </c:if>
 	</form>	

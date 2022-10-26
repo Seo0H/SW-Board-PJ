@@ -34,7 +34,6 @@ public class BoardServiceImpl implements BoardService {
 	//게시물 내용 보기
 	@Override
 	public BoardVO view(int seqno) throws Exception {
-		
 		return mapper.view(seqno);
 	}
 
@@ -85,6 +84,11 @@ public class BoardServiceImpl implements BoardService {
 	@Override
 	public List<FileVO> fileListView(int seqno) throws Exception {
 		return mapper.fileListView(seqno);
+	}
+	
+	@Override
+	public int fileDel(int fileseqno) throws Exception {
+		return mapper.fileDel(fileseqno);
 	}
 	
 	//게시물 수정

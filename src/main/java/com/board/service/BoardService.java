@@ -41,7 +41,7 @@ public interface BoardService {
 	public List<FileVO> fileListView(int seqno) throws Exception;
 	
 	//선택 파일 삭제
-	public FileVO fileDel(int fileseqno) throws Exception ;
+	public int fileDel(int fileseqno) throws Exception ;
 	
 	//게시물 등록
 	public void write(BoardVO board) throws Exception;

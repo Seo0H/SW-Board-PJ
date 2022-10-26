@@ -1,9 +1,11 @@
 package com.board.controller;
 
 import java.io.File;
+import java.lang.reflect.Array;
 import java.net.URLEncoder;
 import java.time.LocalDateTime;
 import java.util.HashMap;
+import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 import java.util.UUID;
@@ -194,7 +196,6 @@ public class BoardController {
 		String stored_filename = fileInfo.getStored_filename();
 		
 		byte fileByte[] = FileUtils.readFileToByteArray(new File(path+stored_filename));
-		
 		rs.setContentType("application/octet-stream");
 		rs.setContentLength(fileByte.length);
 		rs.setHeader("Content-Disposition",  "attachment; fileName=\""+URLEncoder.encode(org_filename, "UTF-8")+"\";");
@@ -208,24 +209,35 @@ public class BoardController {
 	@GetMapping("/board/modify")
 	public void GetModify(Model model,@RequestParam("seqno") int seqno) 
 			throws Exception {
+		List<FileVO> file = service.fileListView(seqno);
 		
+		model.addAttribute("file", file );
 		model.addAttribute("view", service.view(seqno));
 		model.addAttribute("fileListView", service.fileListView(seqno));
+		//model.addAttribute("fileseqno", );
 	}
 	
 	@PostMapping("/board/modify")
-	public String PostModify(BoardVO board, Model modle) throws Exception{
+	public String PostModify(BoardVO board, @RequestParam(value="deleteFileList", defaultValue="") List<String> strfileseqno) throws Exception{
 		// <------------------- 1.과제 ------------------------> 
 		//1.게시물 수정 -> 완료
 		log.info("<-------------- 게시물 수정 ------------------->");
 		service.modify(board);
-		return "redirect:/board/list?page=1";
-		
+			
 		// 2.선택한 첨부 파일 삭제
-		//List<FileVO> fileseqno = 
-		//service.fileDel();
+
+		//string -> int
+		for(int i=0; i<strfileseqno.size(); i++) {
+		int fileseqno=0;
+		fileseqno = Integer.parseInt(strfileseqno.get(i));
+		service.fileDel(fileseqno);
+		}
+	
+		// 3.추가된 첨부 파일 업로드
 		
-		// 3.추가된 첨부 파일 업로드		
+		
+			
+		return "redirect:/board/list?page=1";
 		
 	}
 	

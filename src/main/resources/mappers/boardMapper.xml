@@ -142,8 +142,8 @@
 </insert>
 
 <!-- 선택 파일 삭제 -->
-<delete id="fileDel" parameterType="com.board.dto.FileVO">
-	delete from tbl_file where FILESEQNO = #{fileseqno}
+<delete id="fileDel"  parameterType="int">
+	delete from tbl_file where fileseqno = #{fileseqno}
 </delete>
 
 <!-- 다운로드를 위한 파일 정보 가져오기 -->
@@ -216,7 +216,7 @@
 
 <!-- 조회수 증가 -->
 <update id="hitnoUpgrade" parameterType="int">
-	update tbl_board set hitno = (select hitno from tbl_board where seqno = #{seqno})+1 where seqno = #{seqno}
+	update tbl_board set hitno = (select nvl(hitno,'0') from tbl_board where seqno = #{seqno})+1 where seqno = #{seqno}
 </update>
 
 </mapper>
