@@ -4,6 +4,7 @@ import java.io.File;
 import java.lang.reflect.Array;
 import java.net.URLEncoder;
 import java.time.LocalDateTime;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
@@ -13,6 +14,7 @@ import java.util.UUID;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
+import javax.transaction.Transactional;
 
 import org.apache.commons.io.FileUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -225,7 +227,6 @@ public class BoardController {
 		service.modify(board);
 			
 		// 2.선택한 첨부 파일 삭제
-
 		//string -> int
 		for(int i=0; i<strfileseqno.size(); i++) {
 		int fileseqno=0;
@@ -243,13 +244,24 @@ public class BoardController {
 	
 	//게시물 삭제
 	@GetMapping("/board/delete")
+	@Transactional
 	public String GetDelete(@RequestParam("seqno") int seqno) throws Exception{
 
 		// <------------------- 2.과제 ------------------------> 
 		// 1.게시물 삭제 시 댓글, 첨부파일, 좋아요/싫어요 정보 삭제
 		//@Transaction 사용
+		String path = "\\Repository\\file\\";
+		List<FileVO> fileList = new ArrayList<>();
+		fileList = service.deleteFileOnBoard(seqno);
 		
-		return null;
+		if(!fileList.isEmpty())
+			for(FileVO vo:fileList) {
+				File file = new File(path + vo.getStored_filename());
+				file.delete();
+			}
+		
+		service.delete(seqno);
+		return "redirect:/board/list?page=1";
 	}
 
 	//좋아요/싫어요 관리

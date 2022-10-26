@@ -38,7 +38,7 @@ public interface BoardService {
 	public FileVO fileInfo(int fileseqno) throws Exception;
 	
 	//게시글 내에서 업로드된 파일 목록 보기
-	public List<FileVO> fileListView(int seqno) throws Exception;
+	public List<FileVO> fileListView(FileVO seqno) throws Exception;
 	
 	//선택 파일 삭제
 	public int fileDel(int fileseqno) throws Exception ;
@@ -51,6 +51,9 @@ public interface BoardService {
 	
 	//게시물 삭제
 	public void delete(int seqno) throws Exception;
+	
+	//게시물에 업로드된 파일 삭제
+	public List<FileVO> deleteFileOnBoard(int seqno)throws Exception;
 	
 	//좋아요/싫어요 확인 가져 오기
 	public LikeVO likeCheckView(Map<String,Object> data) throws Exception;
