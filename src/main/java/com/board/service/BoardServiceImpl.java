@@ -84,7 +84,6 @@ public class BoardServiceImpl implements BoardService {
 	
 	//게시글 내에서 업로드된 파일 목록 보기
 	@Override
-	@Transactional
 	public List<FileVO> fileListView(int seqno) throws Exception {
 		return mapper.fileListView(seqno);
 	}
@@ -106,13 +105,6 @@ public class BoardServiceImpl implements BoardService {
 		mapper.delete(seqno);		
 	}
 	
-	//게시물에 업로드된 파일 삭제
-	@Override
-	@Transactional
-	public List<FileVO> deleteFileOnBoard(int seqno)throws Exception{
-		return mapper.deleteFileOnBoard(seqno);
-	};
-
 	//좋아요/싫어요 확인 가져 오기
 	@Override
 	public LikeVO likeCheckView(Map<String,Object> data) throws Exception {

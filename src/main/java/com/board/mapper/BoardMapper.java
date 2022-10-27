@@ -55,8 +55,6 @@ public interface BoardMapper {
 	//게시물 삭제
 	public int delete(int seqno) throws Exception;
 	
-	//게시물에 업로드된 파일 삭제
-	public List<FileVO> deleteFileOnBoard(int seqno)throws Exception;
 	
 	//좋아요/싫어요 확인 가져 오기
 	public LikeVO likeCheckView(Map<String,Object> data) throws Exception;

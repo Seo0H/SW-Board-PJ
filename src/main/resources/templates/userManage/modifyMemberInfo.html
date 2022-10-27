@@ -232,6 +232,7 @@ function sendImageToServer(){
 	    </center>
 		<form id="modifyForm" name="modifyForm" method="post" >
             
+            <!-- 히든으로 이전 파일이름, 현재 파일이름 등록, 이미지 수정을 안하고 넘기는 경우 등 여러 경우 다 고려해서 짜기-->
 	        <input type="text" id="username" class="username" th:value="${session.username}" disabled />
 	        <input type="hidden" id="userid" name="userid" th:value="${session.userid}">
 	        <input type="text" id="telno" name="telno" class="telno" th:value="${ member.telno }">

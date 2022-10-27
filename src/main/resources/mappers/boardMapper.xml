@@ -167,11 +167,6 @@
 	delete from tbl_board where seqno = #{seqno}
 </delete>
 
-<!-- 게시물에 업로드된 파일 삭제 -->
-<delete id="deleteFileOnBoard" parameterType="com.board.dto.FileVO">
-	delete from tbl_file where seqno = #{seqno}
-</delete>
-
 <!-- 좋아요/싫어요 확인 내용 가져 오기-->
 <select id="likeCheckView" parameterType="java.util.HashMap" resultType="com.board.dto.LikeVO">
 	select mylikecheck, mydislikecheck from tbl_like where seqno = #{seqno} and userid = #{userid}

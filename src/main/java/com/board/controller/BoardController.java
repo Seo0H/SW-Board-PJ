@@ -222,18 +222,22 @@ public class BoardController {
 	@PostMapping("/board/modify")
 	public String PostModify(BoardVO board, @RequestParam(value="deleteFileList", defaultValue="") List<String> strfileseqno) throws Exception{
 		// <------------------- 1.과제 ------------------------> 
-		//1.게시물 수정 -> 완료
+		//1.게시물 수정 -> 보강해야함
 		log.info("<-------------- 게시물 수정 ------------------->");
 		service.modify(board);
-			
+		// requestparam 사용해서 정확하게 값 넘기고 받고 해야함.
+		//검색해서 들어가면 sql오류나네
+		
 		// 2.선택한 첨부 파일 삭제
 		//string -> int
 		for(int i=0; i<strfileseqno.size(); i++) {
 		int fileseqno=0;
+		//fileinfo 
+		//파일로컬에서도 삭제하는거만들기.
 		fileseqno = Integer.parseInt(strfileseqno.get(i));
 		service.fileDel(fileseqno);
 		}
-	
+		
 		// 3.추가된 첨부 파일 업로드
 		
 		
@@ -245,22 +249,32 @@ public class BoardController {
 	//게시물 삭제
 	@GetMapping("/board/delete")
 	@Transactional
-	public String GetDelete(@RequestParam("seqno") int seqno) throws Exception{
+	public String GetDelete(@RequestParam("seqno") int seqno, @RequestParam(value = "fileseqno[]", defaultValue="") List<String> strfileseqno) throws Exception{
 
 		// <------------------- 2.과제 ------------------------> 
 		// 1.게시물 삭제 시 댓글, 첨부파일, 좋아요/싫어요 정보 삭제
 		//@Transaction 사용
-		String path = "\\Repository\\file\\";
-		List<FileVO> fileList = new ArrayList<>();
-		fileList = service.deleteFileOnBoard(seqno);
+		//이후 삭제할때 cascade 사용해서 쫘라락 삭제 + 해당 글에 있던 파일은 따로 삭제
 		
-		if(!fileList.isEmpty())
-			for(FileVO vo:fileList) {
-				File file = new File(path + vo.getStored_filename());
-				file.delete();
-			}
 		
+		/* 로컬파일 삭제
+		 * String path = "\\Repository\\file\\"; List<FileVO> fileList = new
+		 * ArrayList<>(); fileList = service.deleteFileOnBoard(seqno);
+		 * 
+		 * if(!fileList.isEmpty()) for(FileVO vo:fileList) { File file = new File(path +
+		 * vo.getStored_filename()); file.delete(); }
+		 * 
+		 * service.delete(seqno);
+		 */
+		
+		//db row 값 삭제
+		for(int i=0; i<strfileseqno.size(); i++) {
+			int fileseqno=0;
+			fileseqno = Integer.parseInt(strfileseqno.get(i));
+			service.fileDel(fileseqno);
+		}
 		service.delete(seqno);
+		
 		return "redirect:/board/list?page=1";
 	}
 
