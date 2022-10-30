@@ -48,7 +48,6 @@ public class BoardServiceImpl implements BoardService {
 	//게시물 번호 구하기 - 시퀀스의 Last Number 사용
 	@Override
 	public int getSeqnoWithLastNumber() throws Exception {
-
 		return mapper.getSeqnoWithLastNumber();
 	}
 	
@@ -103,6 +102,18 @@ public class BoardServiceImpl implements BoardService {
 	@Override
 	public void delete(int seqno) throws Exception {
 		mapper.delete(seqno);		
+	}
+	
+	//게시물의 모든 파일 삭제 - 파일 번호 가져오기
+	@Override
+	public List<FileVO> deleteFileDBno(int seqno) throws Exception{
+		return mapper.deleteFileDBno(seqno);
+	}
+	
+	// 게시물 파일 db에서 삭제
+	@Override
+	public void deleteFileDB(int seqno) throws Exception{
+		mapper.deleteFileDB(seqno);
 	}
 	
 	//좋아요/싫어요 확인 가져 오기

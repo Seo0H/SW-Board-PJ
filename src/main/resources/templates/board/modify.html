@@ -138,7 +138,7 @@ function sendFileToServer()
 			}
 	}
 
-	var uploadURL = "/board/fileUpload?seqno=[[${seqno}]]&kind=U"; 
+	var uploadURL = "/board/fileUpload?seqno=[[${view.seqno}]]&kind=U"; 
      
 	$.ajax({
         url: uploadURL,

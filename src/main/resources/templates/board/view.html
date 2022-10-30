@@ -88,7 +88,7 @@ a:active { color: red; }
 </style>
 
 
-<script th:inline="javascript">
+<script>
 /*<![CDATA[*/	
 //좋아요, 싫어요 제이쿼리 처리 함수 시작
 
@@ -198,35 +198,8 @@ function sendDataToServer(myLike, myDislike, checkCount) {
 }
 //좋아요, 싫어요 제이쿼리 처리 함수 끝
 
-function mDelete(){
-	if(confirm("정말 삭제 하시겠습니까?")==true) {
-		
-		location.href = "/board/delete?seqno="+[[$view.seqno]]
-		/* var fileseqno = [];
-		
-		$('input[name="fileseqno"]').each(function(i){//체크된 리스트 저장
-			fileseqno.push($(this).val());
-        });
-		
-		var objParams = {
-				"seqno" : [[${view.seqno}]],
-                "fileseqno" : fileseqno 
-            };
-
-		$.ajax({
-		      url         :   "/board/delete",
-	          dataType    :   "json",
-	          contentType :   "application/x-www-form-urlencoded; charset=UTF-8",
-	          type        :   "post",
-	          data        :   objParams,
-	          success : ,
-	  		error : function(data) {
-	  					alert("서버오류 문제로 댓글 등록이 삭제가 실패 했습니다. 잠시 후 다시 시도해주시기 바랍니다.");
-	                	    return false;
-	  		}
-		}); //End of ajax
-		
-	} */
+function mDelete(){	
+		if(confirm("정말 삭제 하시겠습니까?")==true) location.href='/board/delete?seqno=[[${view.seqno}]]'
 }
 
 function fileDownload(fileseqno){
