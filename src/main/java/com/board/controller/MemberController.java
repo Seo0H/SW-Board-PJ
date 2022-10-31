@@ -18,6 +18,7 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -52,7 +53,8 @@ public class MemberController {
 	//사용자 등록 처리
 	@RequestMapping(value="/member/signup",method=RequestMethod.POST)
 	public String postMemberRegistry(MemberVO member,
-			@RequestParam("fileUpload") MultipartFile multipartFile ) {
+		@RequestParam("fileUpload") MultipartFile multipartFile
+		) {
 		
 		String path = "c:\\Repository\\profile\\";
 		File targetFile;
@@ -147,7 +149,7 @@ public class MemberController {
 	
 	//로그아웃
 	@RequestMapping(value="/userManage/logout",method=RequestMethod.POST)
-	public void postLogout(HttpSession session,Model model) {
+		public void postLogout(HttpSession session,Model model) {
 		
 //		String userid = (String)session.getAttribute("userid");
 //		String username = (String)session.getAttribute("username");
@@ -163,8 +165,8 @@ public class MemberController {
 	}
 	
 	//사용자 정보 보기
-	@RequestMapping(value="/userManage/memberInfo",method=RequestMethod.GET)
-	public void gerMemberInfoView(Model model,HttpSession session) {
+	@RequestMapping(value="/userManage/memberInfo")
+		public void gerMemberInfoView(Model model,HttpSession session) {
 		
 		String userid = (String)session.getAttribute("userid");
 		MemberVO member = service.memberInfoView(userid);
@@ -182,6 +184,62 @@ public class MemberController {
 	//사용자 아이디 찾기
 	//패스워드 찾기(패스워드 임시 생성)
 	//회원탈퇴 - 등록한 게시글, 댓글, 좋아요/싫어요, 첨부파일(프로파일 이미지 포함) 삭제 , @Transaction 기능 활용
+	
+	//사용자 기본 정보 변경 화면 보기
+	@RequestMapping(value="/userManage/modifyMemberInfo", method=RequestMethod.GET)
+	public void getModifyMemberInfo(Model model, HttpSession session) throws Exception {
+			
+			String userid = (String)session.getAttribute("userid");
+			MemberVO member = service.memberInfoView(userid);
+			
+			model.addAttribute("member", member);
+	
+		}
+		
+	@RequestMapping(value="/member/modifyMemberInfo", method=RequestMethod.POST)
+	public String postModifyMemberInfo(MemberVO member, 
+			@RequestParam("fileUpload") MultipartFile multipartFile,
+			@RequestParam("telno")String telno,
+			@RequestParam("email") String email,
+			@RequestParam("registImg") String registImg,
+			@RequestParam("prevImg") String prevImg) {
+		
+		String path = "c:\\Repository\\profile\\";
+		File targetFile;
+		
+		member.setTelno(telno);
+		member.setEmail(email);
+		
+		//새 파일 , 기존 파일 구분하는 기능 추가.
+		//만약 새 파일이 들어온게 확인되면 기존 파일 삭제.
+		if(!multipartFile.isEmpty()) {
+			
+			String org_filename = multipartFile.getOriginalFilename();	
+			String org_fileExtension = org_filename.substring(org_filename.lastIndexOf("."));	
+			String stored_filename =  UUID.randomUUID().toString().replaceAll("-", "") + org_fileExtension;	
+							
+			try {
+				targetFile = new File(path + stored_filename);
+				
+				multipartFile.transferTo(targetFile);
+				
+				member.setOrg_filename(org_filename);
+				member.setStored_filename(stored_filename);
+				member.setFilesize(multipartFile.getSize());
+																			
+			} catch (Exception e ) { e.printStackTrace(); }
+			
+		
+	}	
+	
+	service.memberInfoUpdate(member);
+	return "redirect:/";
+		
+		
+	}
+		
+			
+	
 		
 	//우편번호 검색
 	@RequestMapping(value="/member/addrSearch",method=RequestMethod.GET)

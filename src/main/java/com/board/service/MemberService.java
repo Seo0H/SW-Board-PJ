@@ -39,5 +39,8 @@ public interface MemberService {
 	//주소 검색
 	public List<AddressVO> addrSearch(Map<String,Object> data);
 	
+	//사용자 정보 수정
+	public void memberInfoUpdate(MemberVO member);
+	
 	
 }

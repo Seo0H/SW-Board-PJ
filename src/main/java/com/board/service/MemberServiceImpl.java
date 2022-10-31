@@ -71,5 +71,10 @@ public class MemberServiceImpl implements MemberService {
 	public List<AddressVO> addrSearch(Map<String,Object> data) {
 		return mapper.addrSearch(data);
 	}
+	
+	//사용자 정보 수정
+	public void memberInfoUpdate(MemberVO member) {
+		mapper.memberInfoUpdate(member);
+	}
 
 }

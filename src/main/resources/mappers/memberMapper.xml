@@ -45,7 +45,7 @@ select (select to_char(max(inouttime),'YYYY-MM-DD HH24:MI:SS') from tbl_member_l
 
 <!-- 사용자 정보 보기 -->
 <select id="memberInfoView" parameterType="string" resultType="com.board.dto.MemberVO">
-	select userid, username,password,telno,email,role,stored_filename,zipcode,address,
+	select userid, username, password, telno, email, role, stored_filename, zipcode, address,
 	to_char(regdate,'YYYY-MM-DD HH24:MI:SS') as regdate from tbl_member where userid = #{userid}
 </select>
 
@@ -65,6 +65,12 @@ select (select to_char(max(inouttime),'YYYY-MM-DD HH24:MI:SS') from tbl_member_l
 	where rnum between #{startPoint} and #{endPoint} order by zipcode
 
 </select>
+
+<!--사용자 정보 수정 -->
+<update id="memberInfoUpdate" parameterType="com.board.dto.MemberVO">
+	insert into tbl_member (telno,email,org_filename,stored_filename,filesize)
+	values (#{telno},#{email},#{org_filename},#{stored_filename},#{filesize})
+</update>
 
 
 
