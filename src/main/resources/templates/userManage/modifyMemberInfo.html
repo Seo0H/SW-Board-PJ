@@ -4,89 +4,111 @@
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <meta charset="UTF-8">
 <title>사용자 정보 수정</title>
-<script src="//cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+<script
+	src="//cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
 
 <style>
-body { font-family: "나눔고딕", "맑은고딕" }
-h1 { font-family: "HY견고딕" }
-a:link { color: black; }
-a:visited { color: black; }
-a:hover { color: red; }
-a:active { color: red; }
-#hypertext { text-decoration-line: none; cursor: hand; }
+body {
+	font-family: "나눔고딕", "맑은고딕"
+}
+
+h1 {
+	font-family: "HY견고딕"
+}
+
+a:link {
+	color: black;
+}
+
+a:visited {
+	color: black;
+}
+
+a:hover {
+	color: red;
+}
+
+a:active {
+	color: red;
+}
+
+#hypertext {
+	text-decoration-line: none;
+	cursor: hand;
+}
 
 .modifyMemberInfo {
-  width:900px;
-  height:auto;
-  padding: 10px, 10px;
-  background-color:#FFFFFF;
-  border:4px solid gray;
-  border-radius: 20px;
-}
-.userid, .username, .authority_code, .telno, .email, .userid {
-  width: 80%;
-  border:none;
-  border-bottom: 2px solid #adadad;
-  margin: 5px;
-  padding: 10px 10px;
-  outline:none;
-  color: #636e72;
-  font-size:16px;
-  height:25px;
-  background: none;
-}
-.btn_modify {
-  position:relative;
-  left:20%;
-  transform: translateX(-50%);
-  margin-top: 20px;
-  margin-bottom: 10px;
-  width:40%;
-  height:40px;
-  background: red;
-  background-position: left;
-  background-size: 200%;
-  color:white;
-  font-weight: bold;
-  border:none;
-  cursor:pointer;
-  transition: 0.4s;
-  display:inline;
+	width: 900px;
+	height: auto;
+	padding: 10px, 10px;
+	background-color: #FFFFFF;
+	border: 4px solid gray;
+	border-radius: 20px;
 }
 
-.btn_cancel  {
-  position:relative;
-  left:20%;
-  transform: translateX(-50%);
-  margin-top: 20px;
-  margin-bottom: 10px;
-  width:40%;
-  height:40px;
-  background: pink;
-  background-position: left;
-  background-size: 200%;
-  color:white;
-  font-weight: bold;
-  border:none;
-  cursor:pointer;
-  transition: 0.4s;
-  display:inline;
+.userid, .username, .authority_code, .telno, .email, .userid {
+	width: 80%;
+	border: none;
+	border-bottom: 2px solid #adadad;
+	margin: 5px;
+	padding: 10px 10px;
+	outline: none;
+	color: #636e72;
+	font-size: 16px;
+	height: 25px;
+	background: none;
+}
+
+.btn_modify {
+	position: relative;
+	left: 20%;
+	transform: translateX(-50%);
+	margin-top: 20px;
+	margin-bottom: 10px;
+	width: 40%;
+	height: 40px;
+	background: red;
+	background-position: left;
+	background-size: 200%;
+	color: white;
+	font-weight: bold;
+	border: none;
+	cursor: pointer;
+	transition: 0.4s;
+	display: inline;
+}
+
+.btn_cancel {
+	position: relative;
+	left: 20%;
+	transform: translateX(-50%);
+	margin-top: 20px;
+	margin-bottom: 10px;
+	width: 40%;
+	height: 40px;
+	background: pink;
+	background-position: left;
+	background-size: 200%;
+	color: white;
+	font-weight: bold;
+	border: none;
+	cursor: pointer;
+	transition: 0.4s;
+	display: inline;
 }
 
 #ImageRegistration {
-                border: 2px solid #92AAB0;
-                width: 450px;
-                height: 200px;
-                color: #92AAB0;
-                text-align: center;
-                vertical-align: middle;
-                margin: 30px;
-  				padding: 10px 10px;
-                font-size:200%;
-                display: table-cell;
-                
+	border: 2px solid #92AAB0;
+	width: 450px;
+	height: 200px;
+	color: #92AAB0;
+	text-align: center;
+	vertical-align: middle;
+	margin: 30px;
+	padding: 10px 10px;
+	font-size: 200%;
+	display: table-cell;
 }
-
 </style>
 
 <script>
@@ -163,9 +185,14 @@ function imageView(f,obj){
 
 function modify(){
 	
-	if($("#username").val() == '') { alert("이름을 입력하세요."); $("#username").focus(); return false; }
+	if($("#username").val() == '') { 
+		alert("이름을 입력하세요.");
+		$("#username").focus(); return false; }
 		
- 	if($("#telno").val() == '') { alert("전화번호를 입력하세요."); $("#telno").focus(); return false; }
+ 	if($("#telno").val() == '') { 
+ 		alert("전화번호를 입력하세요."); 
+ 		$("#telno").focus(); return false; }
+ 	
  	//전화번호 문자열 정리
 	var beforeTelno = $("#telno").val();
  	var afterTelno = beforeTelno.replace(/\-/gi,"").replace(/\ /gi,"").trim();
@@ -220,35 +247,41 @@ function sendImageToServer(){
 </head>
 
 <body>
-<div class="main" align="center">
-	<div class="modifyMemberInfo" >
-		<h1>사용자 정보 수정</h1>
-		<span style="color:red;">※ 사진 편집을 원하시면 이미지를 클릭해 주세요</span>
-		<form id="modifyForm" name="modifyForm" method="post" >
-		<input type="file" name="fileUpload" id="fileUpload" style="display:none;" />
-		<center>
-		<div id="ImageRegistration">
-			<img th:src="@{'/profile/' + ${member.stored_filename}}" style='width:300px; height:auto;' id="registImg">
-			<type="hidden" th:value="${member.stored_filename}" id="prevImg">
-	    </div>
-	    </center>
+	<div class="main" align="center">
+		<div class="modifyMemberInfo">
+		<form id="modifyForm" name="modifyForm" method="post"  enctype="multipart/form-data">
+			<h1>사용자 정보 수정</h1>
+			<span style="color: red;">※ 사진 편집을 원하시면 이미지를 클릭해 주세요</span>
 			
-            
-            <!-- 히든으로 이전 파일이름, 현재 파일이름 등록, 이미지 수정을 안하고 넘기는 경우 등 여러 경우 다 고려해서 짜기-->
-	        이름:<input type="text" id="username" class="username" th:value="${session.username}" disabled /><br>
-	        아이디:<input type="text" id="userid" name="userid"  class="userid" th:value="${session.userid}" disabled><br>
-	        전화번호:<input type="text" id="telno" name="telno" class="telno" th:value="${ member.telno }"><br>
-	       	이메일:<input type="text" id="email" name="email" class="email" th:value="${ member.email }"><br>
-	        <p th:if="${session.authority_code == '01'}" class="authority_code" style="color:red; text-align:left">사용자 권한 : 마스터 관리자</p>
-	        <p th:if="${session.authority_code == '02'}" class="authority_code" style="color:red; text-align:left">사용자 권한 : 일반 사용자</p>
-	        <input type="button" class="btn_modify" value="사용자 정보 수정" onclick="modify()">
-	        <input type="button" class="btn_cancel" value="취소" onclick="history.back()">
+				<input type="file" name="fileUpload" id="fileUpload" style='display: none;' />
 
-		</form>
+					<div id="ImageRegistration">
+						<img th:src="@{'/profile/' + ${member.stored_filename}}" style='width: 300px; height: auto;'>
+						<input type="hidden" name="org_filename" th:value="${member.org_filename}">
+	   					<input type="hidden" name="stored_filename" th:value="${member.stored_filename}">
+					</div>
+
+
+				<!-- 히든으로 이전 파일이름, 현재 파일이름 등록, 이미지 수정을 안하고 넘기는 경우 등 여러 경우 다 고려해서 짜기-->
+				이름:<input type="text" id="username" class="username" th:value="${session.username}" disabled /><br>
+				아이디:<input type="text" id="userid" name="userid" class="userid" th:value="${session.userid}" disabled><br>
+				전화번호:<input type="text" id="telno" name="telno" class="telno" th:value="${ member.telno }"><br>
+				이메일:<input type="text" id="email" name="email" class="email" th:value="${ member.email }"><br>
+					
+				<p th:if="${session.authority_code == '01'}" class="authority_code"
+					style="color: red; text-align: left">사용자 권한 : 마스터 관리자</p>
+				<p th:if="${session.authority_code == '02'}" class="authority_code"
+					style="color: red; text-align: left">사용자 권한 : 일반 사용자</p>
+					
+				<input type="button" class="btn_modify" value="사용자 정보 수정" onclick="modify()">
+				<input type="button" class="btn_cancel" value="취소" onclick="history.back()">
+
+			</form>
+		</div>
+
 	</div>
-
-</div>
-<br><br>
+	<br>
+	<br>
 
 </body>
 </html>

@@ -197,22 +197,19 @@ public class MemberController {
 		}
 		
 	@RequestMapping(value="/member/modifyMemberInfo", method=RequestMethod.POST)
-	public String postModifyMemberInfo(MemberVO member, 
-			@RequestParam("fileUpload") MultipartFile multipartFile,
-			@RequestParam("telno")String telno,
-			@RequestParam("email") String email,
-			@RequestParam("registImg") String registImg,
-			@RequestParam("prevImg") String prevImg) {
+	public String postModifyMemberInfo(MemberVO member,
+			@RequestParam(value= "fileUpload") MultipartFile multipartFile) {
 		
 		String path = "c:\\Repository\\profile\\";
 		File targetFile;
 		
-		member.setTelno(telno);
-		member.setEmail(email);
-		
 		//새 파일 , 기존 파일 구분하는 기능 추가.
 		//만약 새 파일이 들어온게 확인되면 기존 파일 삭제.
 		if(!multipartFile.isEmpty()) {
+			MemberVO vo = new MemberVO();
+			vo = service.memberInfoView(member.getUserid());
+			File file = new File(path + vo.getStored_filename());
+			file.delete();
 			
 			String org_filename = multipartFile.getOriginalFilename();	
 			String org_fileExtension = org_filename.substring(org_filename.lastIndexOf("."));	
@@ -228,14 +225,10 @@ public class MemberController {
 				member.setFilesize(multipartFile.getSize());
 																			
 			} catch (Exception e ) { e.printStackTrace(); }
-			
+		}	
 		
-	}	
-	
-	service.memberInfoUpdate(member);
-	return "redirect:/";
-		
-		
+		service.memberInfoUpdate(member);
+		return "redirect:/";
 	}
 		
 			

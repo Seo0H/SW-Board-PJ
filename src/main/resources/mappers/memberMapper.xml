@@ -68,8 +68,9 @@ select (select to_char(max(inouttime),'YYYY-MM-DD HH24:MI:SS') from tbl_member_l
 
 <!--사용자 정보 수정 -->
 <update id="memberInfoUpdate" parameterType="com.board.dto.MemberVO">
-	insert into tbl_member (telno,email,org_filename,stored_filename,filesize)
-	values (#{telno},#{email},#{org_filename},#{stored_filename},#{filesize})
+	update tbl_member set telno=#{telno}, email=#{email}, org_filename=#{org_filename},
+		   stored_filename#{stored_filename}, filesize=#{filesize})
+	WHERE userid = #{userid}
 </update>
 
 
