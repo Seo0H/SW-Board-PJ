@@ -226,7 +226,7 @@ public class BoardController {
 
 	@PostMapping("/board/modify")
 	public String PostModify(BoardVO board,
-			@RequestParam(value = "deleteFileList", defaultValue = "") List<String> strfileseqno,
+			@RequestParam(value = "deleteFileList", defaultValue = "") int[] fileseqnoList,
 			List<MultipartFile> multipartFile ) throws Exception {
 		
 		// <------------------- 1.과제 ------------------------>
@@ -238,16 +238,25 @@ public class BoardController {
 		
 		log.info("<-------------- 게시물 수정 ------------------->");
 		service.modify(board);
-	
-
+		
 		// 2.선택한 첨부 파일 삭제
-		// string -> int
-		for (int i = 0; i < strfileseqno.size(); i++) {
-			int fileseqno = 0;
-			fileseqno = Integer.parseInt(strfileseqno.get(i));
-			log.info("파일 삭제={}", fileseqno);
-			service.fileDel(fileseqno);
+		String path = "c:\\Repository\\file\\";
+		List<FileVO> fileList = new ArrayList<>();
+		
+		if(fileseqnoList!=null) {
+			for (int i=0; i<fileseqnoList.length; i++) {
+				FileVO fileInfo = service.fileInfo(fileseqnoList[i]);
+				File file = new File(path + fileInfo.getStored_filename());
+				
+				//로컬 repo 파일 삭제
+				file.delete();
+				
+				//DB 파일 삭제
+				service.fileDel(fileseqnoList[i]);
+				log.info("파일 삭제={}", fileInfo.getStored_filename());
+			}
 		}
+		
 
 		// 3.추가된 첨부 파일 업로드
 		
