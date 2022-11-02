@@ -84,4 +84,9 @@ select (select to_char(max(inouttime),'YYYY-MM-DD HH24:MI:SS') from tbl_member_l
 	update tbl_member set password=#{password}, pwcheck = #{pwcheck}+1, LASTPWDATE = sysdate where userid = #{userid}
 </update>
 
+<!-- 회원 탈퇴 -->
+<delete id="deleteUser" parameterType="com.board.dto.MemberVO">
+	delete from tbl_member where userid = #{userid}
+</delete>
+
 </mapper>

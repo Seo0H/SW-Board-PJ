@@ -86,4 +86,6 @@ public class MemberServiceImpl implements MemberService {
 		public void pwModify(MemberVO member) {
 		mapper.pwModify(member);
 	}
+		
+
 }

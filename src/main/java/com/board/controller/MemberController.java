@@ -202,6 +202,7 @@ public class MemberController {
 		
 		String path = "d:\\Repository\\profile\\";
 		File targetFile;
+		
 		String userid = (String)session.getAttribute("userid");
 		log.info("postModifyMemberInfo_userid={}",userid);
 		member.setUserid(userid);
@@ -296,6 +297,13 @@ public class MemberController {
 	//패스워드 찾기(패스워드 임시 생성)
 	
 	//회원탈퇴 - 등록한 게시글, 댓글, 좋아요/싫어요, 첨부파일(프로파일 이미지 포함) 삭제 , @Transaction 기능 활용
+	@RequestMapping(value="/userManage/deleteUser", method=RequestMethod.GET)
+	public void deleteUser(HttpSession session) {
+		String userid = (String)session.getAttribute("userid");
+		MemberVO member = service.memberInfoView(userid);
+
+		
+	}
 		
 	//우편번호 검색
 	@RequestMapping(value="/member/addrSearch",method=RequestMethod.GET)
