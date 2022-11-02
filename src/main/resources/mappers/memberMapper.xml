@@ -45,7 +45,8 @@ select (select to_char(max(inouttime),'YYYY-MM-DD HH24:MI:SS') from tbl_member_l
 
 <!-- 사용자 정보 보기 -->
 <select id="memberInfoView" parameterType="string" resultType="com.board.dto.MemberVO">
-	select userid, username, password, telno, email, role, stored_filename, zipcode, address,
+	select userid, username, password, telno, email, role, stored_filename, zipcode, address, pwcheck, 
+	to_char(lastpwdate,'YYYY-MM-DD HH24:MI:SS') as lastpwdate, 
 	to_char(regdate,'YYYY-MM-DD HH24:MI:SS') as regdate from tbl_member where userid = #{userid}
 </select>
 
@@ -78,5 +79,9 @@ select (select to_char(max(inouttime),'YYYY-MM-DD HH24:MI:SS') from tbl_member_l
 	select userid from TBL_MEMBER where username = #{username} and telno = #{telno}  
 </select>
 
+<!-- 비밀번호 변경 -->
+<update id="pwModify" parameterType="com.board.dto.MemberVO">
+	update tbl_member set password=#{password}, pwcheck = #{pwcheck}+1, LASTPWDATE = sysdate where userid = #{userid}
+</update>
 
 </mapper>

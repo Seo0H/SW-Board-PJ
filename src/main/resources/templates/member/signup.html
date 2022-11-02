@@ -118,6 +118,8 @@ h1 { font-family: "HY견고딕" }
 			else if(Pass.search(/\s/) != -1){ alert("암호는 공백 없이 입력해주세요."); return false; }
 			else if(num < 0 || eng < 0 || spe < 0 ){ alert("암호는 영문,숫자,특수문자를 혼합하여 입력해주세요."); return false; }
 			
+			if($("#fileUpload").val() == '') { alert("프로필 사진을 등록 해 주세요."); return false;}
+			
 			if($("#zip").val() == '') { alert("우편번호를 입력하세요."); $("#zip").focus(); return false; }
 			document.registerForm.zipcode.value=$("#zip").val();
 			if($("#addr2").val() == '') { alert("상세 주소를 입력하세요."); $("#addr2").focus(); return false; }

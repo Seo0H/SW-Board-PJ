@@ -104,7 +104,8 @@ function search(){
 			<tr th:each="list : ${list}" onMouseover="this.style.background='#46D2D2';" onmouseout="this.style.background='white';">
   				<!-- <td><span th:text="${listStat.count}"></span></td>  -->
   				<td><span th:text="${list.seq}"></span></td>
-  				<td style="text-align:left;"><a id="hypertext" th:href="@{'/board/view?seqno=' + ${list.seqno} + '&page=' + ${page} + '&searchType=' + ${searchType} + '&keyword=' + ${keyword} }" onMouseover='this.style.textDecoration="underline"'  
+  				<td style="text-align:left;">
+  				<a id="hypertext" th:href="@{'/board/view?seqno=' + ${list.seqno} + '&page=' + ${page} + '&searchType=' + ${searchType} + '&keyword=' + ${keyword} }" onMouseover='this.style.textDecoration="underline"'  
   						onmouseout="this.style.textDecoration='none';"><span th:text="${list.mtitle}"></span></a></td>
   				<td><span th:text="${list.mwriter}"></span></td>
   				<td><span th:text="${list.mregdate}"></span></td> 

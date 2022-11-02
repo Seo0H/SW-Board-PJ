@@ -18,13 +18,11 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
-import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.board.dto.AddressVO;
 import com.board.dto.MemberVO;
@@ -53,10 +51,10 @@ public class MemberController {
 	//사용자 등록 처리
 	@RequestMapping(value="/member/signup",method=RequestMethod.POST)
 	public String postMemberRegistry(MemberVO member,
-		@RequestParam("fileUpload") MultipartFile multipartFile
+		@RequestParam(name="fileUpload", required=false) MultipartFile multipartFile
 		) {
 		
-		String path = "c:\\Repository\\profile\\";
+		String path = "d:\\Repository\\profile\\";
 		File targetFile;
 		
 		if(!multipartFile.isEmpty()) {
@@ -104,7 +102,7 @@ public class MemberController {
 		
 	}
 
-	//로그인 화면 보기
+	//로그인
 	@RequestMapping(value="/member/login",method=RequestMethod.POST)
 	public void postLogIn(Model model,@RequestParam(name="message", required=false) String message) { 
 		
@@ -178,14 +176,14 @@ public class MemberController {
 	}
 	
 	// <------------------- 3.과제 ------------------------> 
-	//jspBoard 및 servletBoard를 참고하여 아래의 기능을 구현 
-	//사용자 기본 정보 변경
-	//패스워드 변경
-	//사용자 아이디 찾기
-	//패스워드 찾기(패스워드 임시 생성)
-	//회원탈퇴 - 등록한 게시글, 댓글, 좋아요/싫어요, 첨부파일(프로파일 이미지 포함) 삭제 , @Transaction 기능 활용
+	//jspBoard 및 servletBoard를 참고하여 아래의 기능을 구현  
+	//1.사용자 기본 정보 변경 o
+	//2.패스워드 변경 o
+	//3.사용자 아이디 찾기 o
+	//4.패스워드 찾기(패스워드 임시 생성)
+	//5.회원탈퇴 - 등록한 게시글, 댓글, 좋아요/싫어요, 첨부파일(프로파일 이미지 포함) 삭제 , @Transaction 기능 활용
 	
-	//사용자 기본 정보 변경 화면 보기
+	//3-1-1. 사용자 기본 정보 변경 화면 보기
 	@RequestMapping(value="/userManage/modifyMemberInfo", method=RequestMethod.GET)
 	public void getModifyMemberInfo(Model model, HttpSession session) throws Exception {
 			
@@ -196,13 +194,13 @@ public class MemberController {
 	
 		}
 	
-	//사용자 기본 정보 변경
+	//3-1-2.사용자 기본 정보 변경
 	@RequestMapping(value="/userManage/modifyMemberInfo", method=RequestMethod.POST)
 	public String postModifyMemberInfo(MemberVO member,
-			@RequestParam(name= "fileUpload", required=false) MultipartFile multipartFile,
+			@RequestParam(name= "fileUpload", required=false, defaultValue = "") MultipartFile multipartFile,
 			HttpSession session) {
 		
-		String path = "c:\\Repository\\profile\\";
+		String path = "d:\\Repository\\profile\\";
 		File targetFile;
 		String userid = (String)session.getAttribute("userid");
 		log.info("postModifyMemberInfo_userid={}",userid);
@@ -241,10 +239,39 @@ public class MemberController {
 	}
 	
 	
-	//패스워드 변경	화면 보기
+	//3-2-1.패스워드 변경 화면 보기
 	@RequestMapping(value="/userManage/modifyPassword", method=RequestMethod.GET)
-	public void getModifyPassword(Model model, HttpSession session) throws Exception {}
+	public void getModifyPassword() throws Exception {}
 	
+	//3-2-2.패스워드 변경
+	@RequestMapping(value="/userManage/modifyPassword", method=RequestMethod.POST)
+	public void postModifyPassword(Model model, HttpSession session,
+			@RequestParam(name= "old_userpassword") String old_userpassword,
+			@RequestParam(name= "new_userpassword") String new_userpassword
+			) throws Exception {
+		
+		String userid = (String)session.getAttribute("userid");
+		MemberVO member = service.memberInfoView(userid);
+		String msg = null ;
+		
+		String userpw = member.getPassword();
+		
+			if(pwdEncoder.matches(old_userpassword, userpw)){
+				msg = "SUCCESS";
+				log.info("비밀번호가 일치합니다.");
+				String newpw = pwdEncoder.encode(new_userpassword);
+				member.setPassword(newpw);
+				service.pwModify(member);
+				
+			} else {
+				msg = "PASSWORD_NOT_FOUND";
+				log.info("비밀번호가 일치하지 않습니다.");
+			}
+			
+		model.addAttribute("msg", msg);
+	}
+
+
 	//사용자 아이디 찾기 페이지 보기
 	@RequestMapping(value="/member/searchID", method=RequestMethod.GET)
 	public void getSearchID() throws Exception {}

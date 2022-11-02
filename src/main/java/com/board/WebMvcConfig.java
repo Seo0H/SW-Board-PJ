@@ -12,7 +12,7 @@ public class WebMvcConfig implements WebMvcConfigurer {
 	public void addResourceHandlers(ResourceHandlerRegistry registry) {
 
     	registry.addResourceHandler("/profile/**")
-				.addResourceLocations("file:///C:/Repository/profile/");
+				.addResourceLocations("file:///D:/Repository/profile/");
     	registry.addResourceHandler("/**")
     			.addResourceLocations("classpath:/static/");
     }

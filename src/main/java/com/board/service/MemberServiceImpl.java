@@ -82,4 +82,8 @@ public class MemberServiceImpl implements MemberService {
 			return mapper.idSearch(data);
 		}
 
+	//비밀번호 변경
+		public void pwModify(MemberVO member) {
+		mapper.pwModify(member);
+	}
 }

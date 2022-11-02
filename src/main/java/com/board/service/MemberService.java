@@ -45,5 +45,7 @@ public interface MemberService {
 	//아이디 찾기
 	public String idSearch(MemberVO data);
 	
+	//비밀번호 변경
+	public void pwModify(MemberVO member);
 	
 }
