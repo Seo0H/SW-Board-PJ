@@ -69,10 +69,14 @@ select (select to_char(max(inouttime),'YYYY-MM-DD HH24:MI:SS') from tbl_member_l
 <!--사용자 정보 수정 -->
 <update id="memberInfoUpdate" parameterType="com.board.dto.MemberVO">
 	update tbl_member set telno=#{telno}, email=#{email}, org_filename=#{org_filename},
-		   stored_filename#{stored_filename}, filesize=#{filesize})
-	WHERE userid = #{userid}
+		   stored_filename=#{stored_filename}, filesize=#{filesize}
+	where userid = #{userid}
 </update>
 
+<!-- 아이디 찾기 -->
+<select id="idSearch" parameterType="com.board.dto.MemberVO" resultType="String">
+	select userid from TBL_MEMBER where username = #{username} and telno = #{telno}  
+</select>
 
 
 </mapper>

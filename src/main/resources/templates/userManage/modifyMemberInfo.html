@@ -210,35 +210,8 @@ function sendImageToServer(){
 	
 	var fileList=file.files;
 	var reader=new FileReader();
-	
-	if(fileList && fileList[0]){
-	reader.readAsDataURL(fileList[0]);
-	  reader.onload = function (e) {
-        	var formData = new FormData();
-        	formData.append("imgUpload",fileList[0]);
-	
-        	$.ajax( {
-                url: "/member/imgUpload?userid=" + $("#userid").val() + "&kinds=M",
-                type: 'POST',
-                data: formData,
-                processData: false,
-                contentType: false,
-				dataType: 'json',
-                enctype: 'multipart/form-data',
-                success: function(data){
-                	if(JSON.parse(data)['result'] == "OK"){	} 
-                		else if(JSON.parse(data)['result'] == "GOOD") { }
-        					else alert("조금 늦네요.잠시만 기다려 주세요.");
-                }, //End of Success
-                error: function (xhr, status, error) {
-               	    	alert("서버오류 문제로 이미지 업로드가 안됩니다. 잠시 후 다시 시도해주시기 바랍니다.");
-               	     return false;
-               	} //End of Error  
-             }); //End of ajax
-	
-      }; //End of reader.onload
-	} //End of if(fileList && fileList[0])
-	$("#modifyForm").attr("action" , "/member/modifyMemberInfo").submit();	
+
+	$("#modifyForm").attr("action" , "/userManage/modifyMemberInfo").submit();	
 }
 
 

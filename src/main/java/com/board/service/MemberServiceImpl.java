@@ -76,5 +76,10 @@ public class MemberServiceImpl implements MemberService {
 	public void memberInfoUpdate(MemberVO member) {
 		mapper.memberInfoUpdate(member);
 	}
+	
+	//아이디 찾기
+		public String idSearch(MemberVO data) {
+			return mapper.idSearch(data);
+		}
 
 }

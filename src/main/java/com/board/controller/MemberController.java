@@ -195,20 +195,27 @@ public class MemberController {
 			model.addAttribute("member", member);
 	
 		}
-		
-	@RequestMapping(value="/member/modifyMemberInfo", method=RequestMethod.POST)
+	
+	//사용자 기본 정보 변경
+	@RequestMapping(value="/userManage/modifyMemberInfo", method=RequestMethod.POST)
 	public String postModifyMemberInfo(MemberVO member,
-			@RequestParam(value= "fileUpload") MultipartFile multipartFile) {
+			@RequestParam(name= "fileUpload", required=false) MultipartFile multipartFile,
+			HttpSession session) {
 		
 		String path = "c:\\Repository\\profile\\";
 		File targetFile;
+		String userid = (String)session.getAttribute("userid");
+		log.info("postModifyMemberInfo_userid={}",userid);
+		member.setUserid(userid);
 		
-		//새 파일 , 기존 파일 구분하는 기능 추가.
-		//만약 새 파일이 들어온게 확인되면 기존 파일 삭제.
+		if(multipartFile.isEmpty()) {
+			log.info("multipartFile isEmpty");
+		}
+
 		if(!multipartFile.isEmpty()) {
-			MemberVO vo = new MemberVO();
-			vo = service.memberInfoView(member.getUserid());
-			File file = new File(path + vo.getStored_filename());
+			
+			
+			File file = new File(path + member.getStored_filename());
 			file.delete();
 			
 			String org_filename = multipartFile.getOriginalFilename();	
@@ -220,7 +227,9 @@ public class MemberController {
 				
 				multipartFile.transferTo(targetFile);
 				
+				
 				member.setOrg_filename(org_filename);
+				log.info("org_filename:{}", member.getOrg_filename());
 				member.setStored_filename(stored_filename);
 				member.setFilesize(multipartFile.getSize());
 																			
@@ -228,11 +237,38 @@ public class MemberController {
 		}	
 		
 		service.memberInfoUpdate(member);
-		return "redirect:/";
+		return "redirect:/userManage/memberInfo";
 	}
-		
-			
 	
+	
+	//패스워드 변경	화면 보기
+	@RequestMapping(value="/userManage/modifyPassword", method=RequestMethod.GET)
+	public void getModifyPassword(Model model, HttpSession session) throws Exception {}
+	
+	//사용자 아이디 찾기 페이지 보기
+	@RequestMapping(value="/member/searchID", method=RequestMethod.GET)
+	public void getSearchID() throws Exception {}
+	
+	//사용자 아이디 찾기 
+	@RequestMapping(value="/member/searchID", method=RequestMethod.POST)
+	public void postSearchID(MemberVO member, Model model) throws Exception {
+		String memberid = service.idSearch(member);
+		String msg = null;
+		
+		if(memberid == null) {
+			msg = "ID_NOT_FOUND";
+		} else {
+			msg = "SUCCESS";
+		}
+		
+		model.addAttribute("msg", msg);
+		model.addAttribute("ID", memberid);
+		
+	}
+	
+	//패스워드 찾기(패스워드 임시 생성)
+	
+	//회원탈퇴 - 등록한 게시글, 댓글, 좋아요/싫어요, 첨부파일(프로파일 이미지 포함) 삭제 , @Transaction 기능 활용
 		
 	//우편번호 검색
 	@RequestMapping(value="/member/addrSearch",method=RequestMethod.GET)

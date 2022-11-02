@@ -44,5 +44,8 @@ public interface MemberMapper {
 	//사용자 정보 수정
 	public void memberInfoUpdate(MemberVO member);
 	
+	//아이디 찾기
+	public String idSearch(MemberVO member);
+	
 	
 }
