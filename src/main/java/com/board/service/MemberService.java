@@ -7,6 +7,7 @@ import java.util.Map;
 import javax.sql.DataSource;
 
 import com.board.dto.AddressVO;
+import com.board.dto.FileVO;
 import com.board.dto.MemberVO;
 
 
@@ -48,6 +49,12 @@ public interface MemberService {
 	//비밀번호 변경
 	public void pwModify(MemberVO member);
 	
+	//회원 탈퇴
+	public void deleteUser(String userid);
 	
+	// 유저의 모든 게시물 파일 번호 가져오기
+	public List<FileVO> userBoardFileno(String userid) throws Exception;
 	
+	// 유저의 프로필 사진 번호 가져오기
+	public FileVO userProfileno(String userid) throws Exception;
 }

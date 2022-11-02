@@ -74,8 +74,9 @@ a { text-decoration : none; cursor: hand; }
 function memberInfoDelete() {
 	
 	if(confirm("사용자 탈퇴를 하시면 작성하셨던 모든 게시물도 함께 삭제됩니다. \n정말로 사용자 탈퇴 하시겠습니까?") == true)
-	 	{ alert("사용자 정보기 삭제 되었습니다."); location.href='/member/memberInfoDelete';  } 	
-}
+	 	{ location.href='/userManage/deleteUser';
+			alert("사용자 정보가 삭제 되었습니다.");   } 	
+		}	
 </script>
 </head>
 
@@ -107,7 +108,7 @@ function memberInfoDelete() {
         <a href="/board/list?page=1">처음으로</a> &nbsp;&nbsp;
         <a href="/userManage/modifyMemberInfo">기본정보 변경</a> &nbsp;&nbsp;
         <a href="/userManage/modifyPassword">패스워드 변경</a> &nbsp;&nbsp;
-        <a href="/userManage/deleteUser">회원탈퇴</a> &nbsp;&nbsp;
+        <a href='javascript:void(0);' onclick="memberInfoDelete();">회원탈퇴</a> &nbsp;&nbsp;
     </div>
 <br><br>
 </div>

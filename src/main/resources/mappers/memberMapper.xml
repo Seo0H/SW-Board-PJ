@@ -85,8 +85,18 @@ select (select to_char(max(inouttime),'YYYY-MM-DD HH24:MI:SS') from tbl_member_l
 </update>
 
 <!-- 회원 탈퇴 -->
-<delete id="deleteUser" parameterType="com.board.dto.MemberVO">
+<delete id="deleteUser" parameterType="string">
 	delete from tbl_member where userid = #{userid}
 </delete>
+
+<!-- 유저 프로필사진 파일 번호  -->
+<select id="userBoardFileno" parameterType="string" resultType="com.board.dto.FileVO">
+	select stored_filename,org_filename from tbl_member where userid = #{userid}
+</select>
+
+<!-- 유저의 모든 파일 삭제 - 파일 번호 가져오기  -->
+<select id="userProfileno" parameterType="string" resultType="com.board.dto.FileVO">
+	select * from tbl_file where userid = #{userid}
+</select>
 
 </mapper>

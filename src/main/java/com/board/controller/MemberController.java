@@ -9,6 +9,7 @@ import java.util.Map;
 import java.util.UUID;
 
 import javax.servlet.http.HttpSession;
+import javax.transaction.Transactional;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -25,7 +26,9 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 
 import com.board.dto.AddressVO;
+import com.board.dto.FileVO;
 import com.board.dto.MemberVO;
+import com.board.service.BoardService;
 import com.board.service.MemberService;
 import com.board.util.Page;
 
@@ -297,12 +300,39 @@ public class MemberController {
 	//패스워드 찾기(패스워드 임시 생성)
 	
 	//회원탈퇴 - 등록한 게시글, 댓글, 좋아요/싫어요, 첨부파일(프로파일 이미지 포함) 삭제 , @Transaction 기능 활용
+	@Transactional
 	@RequestMapping(value="/userManage/deleteUser", method=RequestMethod.GET)
-	public void deleteUser(HttpSession session) {
+	public String deleteUser(HttpSession session) throws Exception {
+		
 		String userid = (String)session.getAttribute("userid");
 		MemberVO member = service.memberInfoView(userid);
-
 		
+		String boardPath = "d:\\Repository\\file\\";
+		String profilePath = "d:\\Repository\\profile\\";
+		
+		List<FileVO> fileList = new ArrayList<>();
+		FileVO profile ;
+		
+		fileList = service.userBoardFileno(userid);
+		profile = service.userProfileno(userid);
+		
+
+		if(!fileList.isEmpty()) {
+			for(FileVO vo:fileList){
+				log.info("stored_filename={}", vo.getStored_filename());
+				File boardFile = new File(boardPath + vo.getStored_filename());
+				boardFile.delete();
+				}
+
+			File profileFile = new File(profilePath + profile.getStored_filename());
+			profileFile.delete();
+			
+			log.info("<-------------- 로컬 파일 삭제 ------------------->");
+		}	
+		
+		service.deleteUser(userid);	
+		return "redirect:/member/login";
+
 	}
 		
 	//우편번호 검색

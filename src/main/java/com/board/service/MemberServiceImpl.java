@@ -10,6 +10,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.board.dto.AddressVO;
+import com.board.dto.FileVO;
 import com.board.dto.MemberVO;
 import com.board.mapper.MemberMapper;
 
@@ -73,19 +74,37 @@ public class MemberServiceImpl implements MemberService {
 	}
 	
 	//사용자 정보 수정
+	@Override
 	public void memberInfoUpdate(MemberVO member) {
 		mapper.memberInfoUpdate(member);
 	}
 	
 	//아이디 찾기
-		public String idSearch(MemberVO data) {
-			return mapper.idSearch(data);
-		}
+	@Override
+	public String idSearch(MemberVO data) {
+		return mapper.idSearch(data);
+	}
 
 	//비밀번호 변경
-		public void pwModify(MemberVO member) {
+	@Override
+	public void pwModify(MemberVO member) {
 		mapper.pwModify(member);
 	}
 		
+	//회원 탈퇴
+	@Override
+	public void deleteUser(String userid) {
+		mapper.deleteUser(userid);
+	}
+	
+	// 특정 유저의 게시물 삭제 - 파일 번호 가져오기
+	@Override
+	public List<FileVO> userBoardFileno(String userid) throws Exception {
+		return mapper.userBoardFileno(userid);
+	}
 
+	@Override
+	public FileVO userProfileno(String userid) throws Exception {
+		return mapper.userProfileno(userid);
+	}
 }

@@ -232,9 +232,9 @@ public class BoardController {
 			List<MultipartFile> multipartFile ) throws Exception {
 		
 		// <------------------- 1.과제 ------------------------>
-		// 1.게시물 수정 -> 보강해야함
-		// 2.선택한 첨부 파일 삭제
-		// 3.추가된 첨부 파일 업로드
+		// 1.게시물 수정 o
+		// 2.선택한 첨부 파일 삭제 o
+		// 3.추가된 첨부 파일 업로드 o
 		
 		log.info("<-------------- 게시물 수정 ------------------->");
 		service.modify(board);

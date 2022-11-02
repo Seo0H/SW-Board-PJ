@@ -92,4 +92,5 @@ public interface BoardMapper {
 
 		// 게시물의 모든 파일 삭제 - 파일 번호 가져오기
 		public List<FileVO> deleteFileDBno(int seqno) throws Exception;
+		
 }
