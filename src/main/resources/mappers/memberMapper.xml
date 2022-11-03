@@ -81,9 +81,9 @@ select (select to_char(max(inouttime),'YYYY-MM-DD HH24:MI:SS') from tbl_member_l
 
 <!-- 비밀번호 찾기 -->
 <select id="pwSearch" parameterType="com.board.dto.MemberVO" resultType="boolean">
-	select * 
-	from TBL_MEMBER
-	where username = #{username} and userid = #{userid}  
+	SELECT  case when COUNT(*) >=1 then 1 else 0 end as isExisted
+  	FROM    tbl_member
+  	WHERE    username = #{username} and userid=#{userid} 
 </select>
 
 <!-- 비밀번호 변경 -->

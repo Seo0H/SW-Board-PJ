@@ -11,6 +11,7 @@ import java.util.UUID;
 import javax.servlet.http.HttpSession;
 import javax.transaction.Transactional;
 
+import org.apache.commons.lang3.RandomStringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -183,7 +184,7 @@ public class MemberController {
 	//1.사용자 기본 정보 변경 o
 	//2.패스워드 변경 o
 	//3.사용자 아이디 찾기 o
-	//4.패스워드 찾기(패스워드 임시 생성)
+	//4.패스워드 찾기(패스워드 임시 생성) o
 	//5.회원탈퇴 - 등록한 게시글, 댓글, 좋아요/싫어요, 첨부파일(프로파일 이미지 포함) 삭제 , @Transaction 기능 활용 o
 	
 	//3-1-1. 사용자 기본 정보 변경 화면 보기
@@ -307,14 +308,24 @@ public class MemberController {
 			) throws Exception {
 		
 		String msg = null;
+		String tempoPw = null;
 		
 		if(service.pwSearch(member)) {
+			
+			tempoPw = RandomStringUtils.randomAlphanumeric(10);
+			String encodedTemPw = pwdEncoder.encode(tempoPw);
+			member.setPassword(encodedTemPw);
+			service.pwModify(member);
+			
+			msg = "PASSWORD_FOUND";
 			
 		} else {
 			msg = "PASSWORD_NOT_FOUND";
 		}
 		
+		model.addAttribute("tempoPw", tempoPw);
 		model.addAttribute("msg", msg);
+		
 
 	}
 	
