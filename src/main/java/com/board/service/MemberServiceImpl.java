@@ -84,6 +84,12 @@ public class MemberServiceImpl implements MemberService {
 	public String idSearch(MemberVO data) {
 		return mapper.idSearch(data);
 	}
+	
+	//비밀번호 찾기
+	@Override
+	public boolean pwSearch(MemberVO member) {
+		return mapper.pwSearch(member);
+	}
 
 	//비밀번호 변경
 	@Override
@@ -104,7 +110,9 @@ public class MemberServiceImpl implements MemberService {
 	}
 
 	@Override
-	public FileVO userProfileno(String userid) throws Exception {
+	public MemberVO userProfileno(String userid) throws Exception {
 		return mapper.userProfileno(userid);
 	}
+
+
 }

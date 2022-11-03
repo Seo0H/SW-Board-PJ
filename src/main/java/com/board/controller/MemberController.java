@@ -57,7 +57,7 @@ public class MemberController {
 		@RequestParam(name="fileUpload", required=false) MultipartFile multipartFile
 		) {
 		
-		String path = "d:\\Repository\\profile\\";
+		String path = "c:\\Repository\\profile\\";
 		File targetFile;
 		
 		if(!multipartFile.isEmpty()) {
@@ -184,7 +184,7 @@ public class MemberController {
 	//2.패스워드 변경 o
 	//3.사용자 아이디 찾기 o
 	//4.패스워드 찾기(패스워드 임시 생성)
-	//5.회원탈퇴 - 등록한 게시글, 댓글, 좋아요/싫어요, 첨부파일(프로파일 이미지 포함) 삭제 , @Transaction 기능 활용
+	//5.회원탈퇴 - 등록한 게시글, 댓글, 좋아요/싫어요, 첨부파일(프로파일 이미지 포함) 삭제 , @Transaction 기능 활용 o
 	
 	//3-1-1. 사용자 기본 정보 변경 화면 보기
 	@RequestMapping(value="/userManage/modifyMemberInfo", method=RequestMethod.GET)
@@ -203,7 +203,7 @@ public class MemberController {
 			@RequestParam(name= "fileUpload", required=false, defaultValue = "") MultipartFile multipartFile,
 			HttpSession session) {
 		
-		String path = "d:\\Repository\\profile\\";
+		String path = "c:\\Repository\\profile\\";
 		File targetFile;
 		
 		String userid = (String)session.getAttribute("userid");
@@ -297,7 +297,27 @@ public class MemberController {
 		
 	}
 	
-	//패스워드 찾기(패스워드 임시 생성)
+	//패스워드 찾기 페이지 보기(패스워드 임시 생성)
+	@RequestMapping(value="/member/searchPassword", method=RequestMethod.GET)
+	public void getSearchPassword() throws Exception {}
+	
+	//패스워드 찾기 
+	@RequestMapping(value="/member/searchPassword", method=RequestMethod.POST)
+	public void postSearchPassword(MemberVO member, Model model
+			) throws Exception {
+		
+		String msg = null;
+		
+		if(service.pwSearch(member)) {
+			
+		} else {
+			msg = "PASSWORD_NOT_FOUND";
+		}
+		
+		model.addAttribute("msg", msg);
+
+	}
+	
 	
 	//회원탈퇴 - 등록한 게시글, 댓글, 좋아요/싫어요, 첨부파일(프로파일 이미지 포함) 삭제 , @Transaction 기능 활용
 	@Transactional
@@ -307,11 +327,11 @@ public class MemberController {
 		String userid = (String)session.getAttribute("userid");
 		MemberVO member = service.memberInfoView(userid);
 		
-		String boardPath = "d:\\Repository\\file\\";
-		String profilePath = "d:\\Repository\\profile\\";
+		String boardpath = "c:\\Repository\\file\\";
+		String profilepath = "c:\\Repository\\profile\\";
 		
 		List<FileVO> fileList = new ArrayList<>();
-		FileVO profile ;
+		MemberVO profile = null;
 		
 		fileList = service.userBoardFileno(userid);
 		profile = service.userProfileno(userid);
@@ -320,11 +340,11 @@ public class MemberController {
 		if(!fileList.isEmpty()) {
 			for(FileVO vo:fileList){
 				log.info("stored_filename={}", vo.getStored_filename());
-				File boardFile = new File(boardPath + vo.getStored_filename());
+				File boardFile = new File(boardpath + vo.getStored_filename());
 				boardFile.delete();
 				}
 
-			File profileFile = new File(profilePath + profile.getStored_filename());
+			File profileFile = new File(profilepath + profile.getStored_filename());
 			profileFile.delete();
 			
 			log.info("<-------------- 로컬 파일 삭제 ------------------->");

@@ -46,6 +46,9 @@ public interface MemberService {
 	//아이디 찾기
 	public String idSearch(MemberVO data);
 	
+	//비밀번호 찾기
+	public boolean pwSearch(MemberVO member);
+	
 	//비밀번호 변경
 	public void pwModify(MemberVO member);
 	
@@ -56,5 +59,5 @@ public interface MemberService {
 	public List<FileVO> userBoardFileno(String userid) throws Exception;
 	
 	// 유저의 프로필 사진 번호 가져오기
-	public FileVO userProfileno(String userid) throws Exception;
+	public MemberVO userProfileno(String userid) throws Exception;
 }

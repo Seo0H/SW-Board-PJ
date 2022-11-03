@@ -79,6 +79,13 @@ select (select to_char(max(inouttime),'YYYY-MM-DD HH24:MI:SS') from tbl_member_l
 	select userid from TBL_MEMBER where username = #{username} and telno = #{telno}  
 </select>
 
+<!-- 비밀번호 찾기 -->
+<select id="pwSearch" parameterType="com.board.dto.MemberVO" resultType="boolean">
+	select * 
+	from TBL_MEMBER
+	where username = #{username} and userid = #{userid}  
+</select>
+
 <!-- 비밀번호 변경 -->
 <update id="pwModify" parameterType="com.board.dto.MemberVO">
 	update tbl_member set password=#{password}, pwcheck = #{pwcheck}+1, LASTPWDATE = sysdate where userid = #{userid}
@@ -89,14 +96,14 @@ select (select to_char(max(inouttime),'YYYY-MM-DD HH24:MI:SS') from tbl_member_l
 	delete from tbl_member where userid = #{userid}
 </delete>
 
-<!-- 유저 프로필사진 파일 번호  -->
+<!-- 유저 게시판 업로드 파일  -->
 <select id="userBoardFileno" parameterType="string" resultType="com.board.dto.FileVO">
-	select stored_filename,org_filename from tbl_member where userid = #{userid}
+	select * from tbl_file where userid = #{userid}
 </select>
 
-<!-- 유저의 모든 파일 삭제 - 파일 번호 가져오기  -->
-<select id="userProfileno" parameterType="string" resultType="com.board.dto.FileVO">
-	select * from tbl_file where userid = #{userid}
+<!-- 유저 프로필 사진 삭제  -->
+<select id="userProfileno" parameterType="string" resultType="com.board.dto.MemberVO">
+	select stored_filename,org_filename from tbl_member where userid = #{userid}
 </select>
 
 </mapper>
