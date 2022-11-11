@@ -1,5 +1,5 @@
 # Spring boot를 이용한 인프라넷 게시판 제작
-## Production of Net Bulletin Board Using Spring Boot
+Production of Net Bulletin Board Using Spring Boot
 
 ## **Project Period**
 > 2022.08 - 2022.09
