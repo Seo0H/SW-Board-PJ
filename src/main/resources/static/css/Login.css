@@ -1,0 +1,71 @@
+@import url("https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.6/dist/web/static/pretendard.css");
+
+@font-face {
+    font-family: PP-Monument-extended;
+    font-weight: 400;
+    src: local("PP-Monument-Extended-Light"),
+    url(../fonts/PPMONUMENTEXTENDED-LIGHT.OTF);
+}
+
+@font-face {
+    font-family: PP-Monument-extended;
+    font-weight: 800;
+    src: local("PP-Monument-Extended-Black"),
+    url(../fonts/PPMONUMENTEXTENDED-BLACK.OTF);
+}
+
+body {
+    font-family: 'pretendard';
+}
+
+#header{
+    display: block;
+    width: 1190px;
+    height: 145px;
+    margin: 0 auto;
+    top: 0px;
+    background: #232323;
+    position: relative;
+}
+
+.header-containor{
+    position: relative;
+    padding: 64px 31px 20px;
+}
+
+h1{
+    font-family: "PP-Monument-extended";
+    font-weight: 800;
+    font-size: 40.67px;
+    color: #fff;
+    margin: 0;
+}
+
+
+.logo-container{
+    float: left;
+    padding-right: 797px;
+}
+
+.clearfix::after{
+    content: "";
+    display: block;
+   clear: both;
+   position: relative;
+}
+
+
+
+
+
+.header-detail-text{
+    font-family:"PP-Monument-Extended";
+    font-weight: 400;
+    font-size: 15px;
+    color:#8B8B8B;
+}
+
+body {
+    padding: 0px;
+    margin: 0px;
+}
