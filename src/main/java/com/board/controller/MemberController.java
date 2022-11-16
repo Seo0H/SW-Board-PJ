@@ -58,7 +58,7 @@ public class MemberController {
 		@RequestParam(name="fileUpload", required=false) MultipartFile multipartFile
 		) {
 		
-		String path = "c:\\Repository\\profile\\";
+		String path = "d:\\Repository\\profile\\";
 		File targetFile;
 		
 		if(!multipartFile.isEmpty()) {
@@ -204,7 +204,7 @@ public class MemberController {
 			@RequestParam(name= "fileUpload", required=false, defaultValue = "") MultipartFile multipartFile,
 			HttpSession session) {
 		
-		String path = "c:\\Repository\\profile\\";
+		String path = "d:\\Repository\\profile\\";
 		File targetFile;
 		
 		String userid = (String)session.getAttribute("userid");
@@ -338,8 +338,8 @@ public class MemberController {
 		String userid = (String)session.getAttribute("userid");
 		MemberVO member = service.memberInfoView(userid);
 		
-		String boardpath = "c:\\Repository\\file\\";
-		String profilepath = "c:\\Repository\\profile\\";
+		String boardpath = "d:\\Repository\\file\\";
+		String profilepath = "d:\\Repository\\profile\\";
 		
 		List<FileVO> fileList = new ArrayList<>();
 		MemberVO profile = null;

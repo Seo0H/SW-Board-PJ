@@ -62,6 +62,7 @@ public class WebSecurityConfig {
 	        .successHandler(authSucessHandler) // 성공시 요청을 처리할 핸들러
 	        .failureHandler(authFailureHandler); // 실패시 요청을 처리할 핸들러
 
+
 	    http.csrf().disable();
 	    http.cors().disable();
 	    

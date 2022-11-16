@@ -157,7 +157,7 @@ public class BoardController {
 			throws Exception {
 
 		log.info("파일 전송...");
-		String path = "c:\\Repository\\file\\";
+		String path = "d:\\Repository\\file\\";
 		String userid = (String) session.getAttribute("userid");
 		if (kind.equals("I"))
 			seqno = service.getSeqnoWithNextval();
@@ -198,7 +198,7 @@ public class BoardController {
 	public void fileDownload(@RequestParam(name = "fileseqno", required = false) int fileseqno, HttpServletResponse rs)
 			throws Exception {
 
-		String path = "c:\\Repository\\file\\";
+		String path = "d:\\Repository\\file\\";
 
 		FileVO fileInfo = service.fileInfo(fileseqno);
 		String org_filename = fileInfo.getOrg_filename();
@@ -240,7 +240,7 @@ public class BoardController {
 		service.modify(board);
 		
 		// 2.선택한 첨부 파일 삭제
-		String path = "c:\\Repository\\file\\";
+		String path = "d:\\Repository\\file\\";
 		List<FileVO> fileList = new ArrayList<>();
 		
 		if(fileseqnoList!=null) {
@@ -277,7 +277,7 @@ public class BoardController {
 
 		
 		//로컬파일 삭제
-		String path = "c:\\Repository\\file\\";
+		String path = "d:\\Repository\\file\\";
 		List<FileVO> fileList = new ArrayList<>();
 		fileList = service.deleteFileDBno(seqno);
 		
